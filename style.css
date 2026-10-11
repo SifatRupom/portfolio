@@ -360,7 +360,7 @@ body:hover .cursor {
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: var(--white);
-  text-transform: lowercase;
+  text-transform: capitalize;
 }
 
 .hero-title .title-line {
