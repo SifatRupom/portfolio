@@ -133,16 +133,16 @@ setTimeout(() => {
   if (accent) accent.classList.add('revealed');
 }, 1200);
 
-// ==========================================
-// AMBIENT GLOW — MOUSE PARALLAX
-// ==========================================
-document.addEventListener('mousemove', (e) => {
-  const xPercent = (e.clientX / window.innerWidth - 0.5) * 20;
-  const yPercent = (e.clientY / window.innerHeight - 0.5) * 20;
-  gsap.to('.glow-1', { x: xPercent * 1.5, y: yPercent * 1.5, duration: 2, ease: 'power1.out' });
-  gsap.to('.glow-2', { x: -xPercent, y: -yPercent, duration: 3, ease: 'power1.out' });
-  gsap.to('.glow-3', { x: xPercent * 0.5, y: yPercent * 0.5, duration: 2.5, ease: 'power1.out' });
-});
+if (typeof gsap !== 'undefined') {
+  // AMBIENT GLOW — MOUSE PARALLAX
+  document.addEventListener('mousemove', (e) => {
+    const xPercent = (e.clientX / window.innerWidth - 0.5) * 20;
+    const yPercent = (e.clientY / window.innerHeight - 0.5) * 20;
+    gsap.to('.glow-1', { x: xPercent * 1.5, y: yPercent * 1.5, duration: 2, ease: 'power1.out' });
+    gsap.to('.glow-2', { x: -xPercent, y: -yPercent, duration: 3, ease: 'power1.out' });
+    gsap.to('.glow-3', { x: xPercent * 0.5, y: yPercent * 0.5, duration: 2.5, ease: 'power1.out' });
+  });
+}
 
 // ==========================================
 // SCROLL REVEAL — GENERIC
@@ -189,19 +189,21 @@ skillCards.forEach(card => skillObserver.observe(card));
 // ==========================================
 const projectCards = document.querySelectorAll('.project-card');
 
-ScrollTrigger.batch(projectCards, {
-  onEnter: (batch) => {
-    gsap.from(batch, {
-      opacity: 0,
-      y: 60,
-      stagger: 0.12,
-      duration: 0.9,
-      ease: 'power3.out'
-    });
-  },
-  start: 'top 85%',
-  once: true
-});
+if (typeof gsap !== 'undefined') {
+  ScrollTrigger.batch(projectCards, {
+    onEnter: (batch) => {
+      gsap.from(batch, {
+        opacity: 0,
+        y: 60,
+        stagger: 0.12,
+        duration: 0.9,
+        ease: 'power3.out'
+      });
+    },
+    start: 'top 85%',
+    once: true
+  });
+}
 
 // ==========================================
 // ABOUT SECTION — NUMBERS COUNTER
@@ -291,23 +293,23 @@ if (contactBtn) {
   // ==========================================
   // SOCIAL LINKS — REVEAL ON CLICK
   // ==========================================
-  contactBtn.addEventListener('click', () => {
+  contactBtn.addEventListener('click', function () {
+    if (!socialLinks) return;
     socialOpen = !socialOpen;
 
     if (socialOpen) {
-      // Show container first
       socialLinks.classList.add('is-open');
-      // Stagger each link in
-      socialLinkItems.forEach((link, i) => {
-        const delay = parseInt(link.getAttribute('data-delay') || i) * 90;
-        setTimeout(() => {
+      socialLinkItems.forEach(function (link) {
+        var delay = (parseInt(link.getAttribute('data-delay')) || 0) * 90;
+        setTimeout(function () {
           link.classList.add('link-visible');
         }, delay);
       });
     } else {
-      // Reverse: hide links then container
-      socialLinkItems.forEach(link => link.classList.remove('link-visible'));
-      setTimeout(() => {
+      socialLinkItems.forEach(function (link) {
+        link.classList.remove('link-visible');
+      });
+      setTimeout(function () {
         socialLinks.classList.remove('is-open');
       }, 350);
     }
@@ -317,11 +319,13 @@ if (contactBtn) {
 // ==========================================
 // LOADING EFFECT — PAGE ENTRY
 // ==========================================
-gsap.from('body', {
-  opacity: 0,
-  duration: 0.6,
-  ease: 'power2.out'
-});
+if (typeof gsap !== 'undefined') {
+  gsap.from('body', {
+    opacity: 0,
+    duration: 0.6,
+    ease: 'power2.out'
+  });
+}
 
 // ==========================================
 // PHOTO — HANDLE MISSING IMAGE
