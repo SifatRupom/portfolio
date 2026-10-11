@@ -273,6 +273,10 @@ if (heroTitle) {
 // CONTACT BUTTON — MAGNETIC
 // ==========================================
 const contactBtn = document.getElementById('contactBtn');
+const socialLinks = document.getElementById('socialLinks');
+const socialLinkItems = socialLinks ? socialLinks.querySelectorAll('.social-link') : [];
+let socialOpen = false;
+
 if (contactBtn) {
   contactBtn.addEventListener('mousemove', (e) => {
     const rect = contactBtn.getBoundingClientRect();
@@ -282,6 +286,31 @@ if (contactBtn) {
   });
   contactBtn.addEventListener('mouseleave', () => {
     gsap.to(contactBtn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+  });
+
+  // ==========================================
+  // SOCIAL LINKS — REVEAL ON CLICK
+  // ==========================================
+  contactBtn.addEventListener('click', () => {
+    socialOpen = !socialOpen;
+
+    if (socialOpen) {
+      // Show container first
+      socialLinks.classList.add('is-open');
+      // Stagger each link in
+      socialLinkItems.forEach((link, i) => {
+        const delay = parseInt(link.getAttribute('data-delay') || i) * 90;
+        setTimeout(() => {
+          link.classList.add('link-visible');
+        }, delay);
+      });
+    } else {
+      // Reverse: hide links then container
+      socialLinkItems.forEach(link => link.classList.remove('link-visible'));
+      setTimeout(() => {
+        socialLinks.classList.remove('is-open');
+      }, 350);
+    }
   });
 }
 
