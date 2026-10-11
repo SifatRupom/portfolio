@@ -1058,7 +1058,6 @@ body:hover .cursor {
   margin-top: 48px;
   /* Hidden by default — animated in on button click */
   visibility: hidden;
-  opacity: 0;
   pointer-events: none;
 }
 
